@@ -70,6 +70,11 @@ management:
     web:
       exposure:
         include: health,prometheus,metrics,info
+  health:
+    # Redis is optional (rate limiting and caching degrade gracefully), so it must not turn the public health DOWN.
+    # Its state is reported by /api/v1/system/status instead.
+    redis:
+      enabled: false
   endpoint:
     health:
       probes:
