@@ -7,7 +7,7 @@ tags: timeout, uncertain, processor, ambiguous
 ---
 # Processor timeouts and UNCERTAIN payments
 
-A timeout does not prove the processor failed to execute the request. PaySense therefore moves the payment to UNCERTAIN and never retries the charge blindly.
+A timeout does not prove the processor failed to execute the request. Paynomenon therefore moves the payment to UNCERTAIN and never retries the charge blindly.
 
 ## Diagnose
 1. Find payments in UNCERTAIN: Payments page, filter status = UNCERTAIN.

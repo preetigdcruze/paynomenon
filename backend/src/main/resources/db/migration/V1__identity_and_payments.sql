@@ -1,4 +1,4 @@
--- PaySense core schema, part 1: identities, payments, attempts, audit events.
+-- Paynomenon core schema, part 1: identities, payments, attempts, audit events.
 -- All timestamps are timestamptz and are written/read as UTC.
 
 CREATE TABLE users (

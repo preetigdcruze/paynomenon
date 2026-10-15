@@ -24,7 +24,7 @@ export function Login() {
 
   return (
     <div className="login card">
-      <h1>PaySense</h1>
+      <h1>Paynomenon</h1>
       <p className="muted">Payment intelligence platform · simulated payments only</p>
       <form onSubmit={submit} className="stack" aria-label="Sign in">
         <label>

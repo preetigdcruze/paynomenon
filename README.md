@@ -1,14 +1,12 @@
-# PaySense — AI-powered payment intelligence platform
+# Paynomenon — AI-powered payment intelligence platform
 
 A **simulated** payment platform that takes payment requests through a deterministic lifecycle, tracks outcomes, reconciles them against (synthetic) processor settlement reports, and uses an **independent, read-only AI layer** to help engineers investigate failures and spot unusual behavior.
 
 > **Simulation only.** No real banking network, card data or money is involved. Processors are mocks; amounts and merchants are synthetic. This is a portfolio project, not a certified payment or accounting system, and it makes no claim of financial-grade production readiness.
 
-The project folder in the `projects` repository is `Paynomenon/`; the product is called PaySense.
-
 ## The problem it explores
 
-Payments fail in confusing ways: a processor times out *after* executing a charge, a client retries a request, a message is delivered twice, a settlement file disagrees with the books. PaySense is a working model of how to keep those situations **correct** (idempotency, state machine, immutable ledger, outbox, reconciliation) and **diagnosable** (audit trail, metrics, correlation ids, evidence-backed AI investigation), while keeping AI strictly advisory.
+Payments fail in confusing ways: a processor times out *after* executing a charge, a client retries a request, a message is delivered twice, a settlement file disagrees with the books. Paynomenon is a working model of how to keep those situations **correct** (idempotency, state machine, immutable ledger, outbox, reconciliation) and **diagnosable** (audit trail, metrics, correlation ids, evidence-backed AI investigation), while keeping AI strictly advisory.
 
 ## Architecture at a glance
 
@@ -66,7 +64,7 @@ make seed       # loads reproducible synthetic data (seed 42)
 make demo       # walks through three complete workflows
 ```
 
-Open **http://localhost:3000** (UI), http://localhost:8080/swagger-ui.html (API docs, development only). Add `PROFILES=observability make up` for Prometheus (:9090) and Grafana (:3001, dashboard "PaySense operations").
+Open **http://localhost:3000** (UI), http://localhost:8080/swagger-ui.html (API docs, development only). Add `PROFILES=observability make up` for Prometheus (:9090) and Grafana (:3001, dashboard "Paynomenon operations").
 
 > The Compose file, Dockerfiles and the CI Compose job were written and statically validated (YAML parsing) but **could not be started in the authoring sandbox, which has no Docker daemon**. The same application code was run end to end without Docker (below).
 
@@ -85,7 +83,7 @@ Run `make help` for every target.
 
 ### Development accounts
 
-Created at startup only when `PAYSENSE_DEMO_USERS_ENABLED=true` and `PAYSENSE_ENV` is not `production`. Passwords are configurable (`PAYSENSE_DEMO_*_PASSWORD`); the defaults below are for local use only.
+Created at startup only when `PAYNOMENON_DEMO_USERS_ENABLED=true` and `PAYNOMENON_ENV` is not `production`. Passwords are configurable (`PAYNOMENON_DEMO_*_PASSWORD`); the defaults below are for local use only.
 
 | User | Password (default) | Role |
 |---|---|---|
@@ -95,7 +93,7 @@ Created at startup only when `PAYSENSE_DEMO_USERS_ENABLED=true` and `PAYSENSE_EN
 
 ## Configuration
 
-All configuration is environment-driven; see **[.env.example](.env.example)** for every key with comments. Highlights: `PAYSENSE_ENV`, database and secrets, `PAYSENSE_EVENTS_TRANSPORT` (`kafka` | `in-process`), `PAYSENSE_SIMULATION_ENABLED`, and the AI keys `AI_PROVIDER`, `AI_MODEL`, `AI_API_KEY`, `AI_API_BASE_URL`. Retry, circuit-breaker, outbox, analytics and retention settings have safe defaults in `backend/src/main/resources/application.yml`.
+All configuration is environment-driven; see **[.env.example](.env.example)** for every key with comments. Highlights: `PAYNOMENON_ENV`, database and secrets, `PAYNOMENON_EVENTS_TRANSPORT` (`kafka` | `in-process`), `PAYNOMENON_SIMULATION_ENABLED`, and the AI keys `AI_PROVIDER`, `AI_MODEL`, `AI_API_KEY`, `AI_API_BASE_URL`. Retry, circuit-breaker, outbox, analytics and retention settings have safe defaults in `backend/src/main/resources/application.yml`.
 
 ## Synthetic data and demo scenarios
 
@@ -140,7 +138,7 @@ More examples and the full reference: [docs/api.md](docs/api.md).
 
 ## Triggering failure scenarios
 
-Available when `PAYSENSE_SIMULATION_ENABLED=true` (development):
+Available when `PAYNOMENON_SIMULATION_ENABLED=true` (development):
 
 * **Per payment**, put a marker in the description: `[sim:insufficient_funds]`, `[sim:timeout]` (executed, ambiguous), `[sim:timeout_not_executed]`, `[sim:unavailable]`, `[sim:invalid]`, `[sim:delayed]`, `[sim:duplicate_callback]` — also selectable in the "New payment" form.
 * **Globally** (ADMIN): `PUT /api/v1/dev/simulation/MOCK_PROCESSOR` with rates, e.g. `{"timeoutRate":0.2,"timeoutExecutedRatio":1.0,"unavailableRate":0.1}`; force the next N outcomes with `POST /api/v1/dev/simulation/{processor}/force`; reset with `POST /api/v1/dev/simulation/reset`; inspect circuits with `GET /api/v1/dev/simulation/circuits`.

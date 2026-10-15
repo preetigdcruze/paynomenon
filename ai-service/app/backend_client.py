@@ -1,4 +1,4 @@
-"""Read-only access to the PaySense backend.
+"""Read-only access to the Paynomenon backend.
 
 The AI layer's "tools" all go through this module, which enforces three things structurally rather than by convention:
   1. only HTTP GET exists - there is no method for POST/PUT/DELETE on the user-scoped client;

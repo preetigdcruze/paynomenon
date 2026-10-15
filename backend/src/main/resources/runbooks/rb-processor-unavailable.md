@@ -7,7 +7,7 @@ tags: unavailable, 503, circuit breaker, outage, retry
 ---
 # Processor unavailable / circuit open
 
-HTTP 503 style failures are retryable because the processor did not execute the request. PaySense retries with exponential backoff and jitter, and opens a circuit breaker per processor when the failure rate is high.
+HTTP 503 style failures are retryable because the processor did not execute the request. Paynomenon retries with exponential backoff and jitter, and opens a circuit breaker per processor when the failure rate is high.
 
 ## Diagnose
 1. Look for attempts with status UNAVAILABLE and code PROCESSOR_UNAVAILABLE or PROCESSOR_REJECTED_CIRCUIT_OPEN.

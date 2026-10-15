@@ -245,7 +245,7 @@ def main(argv: list[str] | None = None) -> int:
         report["robustness"] = robustness(cases, settings)
 
     m = report["metrics"]
-    print(f"PaySense investigation evaluation - {report['mode']} mode, provider={provider.name}, model={provider.model}, n={len(cases)}")
+    print(f"Paynomenon investigation evaluation - {report['mode']} mode, provider={provider.name}, model={provider.model}, n={len(cases)}")
     for k, v in m.items():
         print(f"  {k:24s} {v}")
     print("  per case:")

@@ -11,7 +11,7 @@ The processor settlement report disagrees with the internal ledger for a payment
 
 ## Diagnose
 1. Open the discrepancy and compare internal and report amount and currency.
-2. Check the payment's audit events: was there a refund or a partial capture? PaySense only supports full refunds, so a difference equal to a refund points elsewhere.
+2. Check the payment's audit events: was there a refund or a partial capture? Paynomenon only supports full refunds, so a difference equal to a refund points elsewhere.
 3. A currency mismatch with the same numeric amount usually indicates a processor-side mapping error.
 
 ## Resolve

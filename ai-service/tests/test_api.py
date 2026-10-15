@@ -28,7 +28,7 @@ def test_health_is_public_and_metrics_exposes_prometheus_text():
     c, _ = client()
     h = c.get("/health").json()
     assert h["status"] == "ok" and h["provider"] == "mock" and h["providerConfigured"] is True
-    assert "paysense_ai_requests_total" in c.get("/metrics").text or c.get("/metrics").status_code == 200
+    assert "paynomenon_ai_requests_total" in c.get("/metrics").text or c.get("/metrics").status_code == 200
 
 
 def test_internal_token_is_required_and_checked_in_constant_time():

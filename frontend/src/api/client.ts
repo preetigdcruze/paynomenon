@@ -21,7 +21,7 @@ import type {
   TrendPoint,
 } from './types';
 
-const TOKEN_KEY = 'paysense.token';
+const TOKEN_KEY = 'paynomenon.token';
 
 // sessionStorage can be unavailable (privacy modes); the app then simply keeps the token in memory for the session.
 let memoryToken: string | null = null;
@@ -92,7 +92,7 @@ async function request<T>(
       body: opts.body === undefined ? undefined : JSON.stringify(opts.body),
     });
   } catch {
-    throw new ApiError(0, null, 'Cannot reach the PaySense API. Check that the backend is running.');
+    throw new ApiError(0, null, 'Cannot reach the Paynomenon API. Check that the backend is running.');
   }
   const text = await res.text();
   let json: unknown = null;

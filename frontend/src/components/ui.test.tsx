@@ -64,7 +64,7 @@ describe('DataState', () => {
 
 describe('describeError', () => {
   it('explains network failures without status codes', () => {
-    expect(describeError(new ApiError(0, null, 'Cannot reach the PaySense API.'))).toBe('Cannot reach the PaySense API.');
+    expect(describeError(new ApiError(0, null, 'Cannot reach the Paynomenon API.'))).toBe('Cannot reach the Paynomenon API.');
   });
 });
 

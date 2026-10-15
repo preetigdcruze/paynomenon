@@ -1,6 +1,6 @@
-# PaySense local stack.   docker compose up -d --build        (or: make up)
+# Paynomenon local stack.   docker compose up -d --build        (or: make up)
 # Profiles: default = app + dependencies;  observability = Prometheus + Grafana.
-name: paysense
+name: paynomenon
 
 x-restart: &restart
   restart: unless-stopped
@@ -10,13 +10,13 @@ services:
     image: postgres:16-alpine
     <<: *restart
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-paysense}
-      POSTGRES_USER: ${POSTGRES_USER:-paysense}
+      POSTGRES_DB: ${POSTGRES_DB:-paynomenon}
+      POSTGRES_USER: ${POSTGRES_USER:-paynomenon}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env (see .env.example)}
     volumes: [pgdata:/var/lib/postgresql/data]
     ports: ["127.0.0.1:${POSTGRES_PORT:-5432}:5432"]
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-paysense} -d ${POSTGRES_DB:-paysense}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-paynomenon} -d ${POSTGRES_DB:-paynomenon}"]
       interval: 5s
       timeout: 3s
       retries: 20
@@ -56,25 +56,25 @@ services:
       redis: {condition: service_healthy}
       kafka: {condition: service_healthy}
     environment:
-      PAYSENSE_ENV: ${PAYSENSE_ENV:-development}
-      PAYSENSE_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-paysense}
-      PAYSENSE_DB_USER: ${POSTGRES_USER:-paysense}
-      PAYSENSE_DB_PASSWORD: ${POSTGRES_PASSWORD}
-      PAYSENSE_REDIS_HOST: redis
-      PAYSENSE_KAFKA_BOOTSTRAP: kafka:9092
-      PAYSENSE_EVENTS_TRANSPORT: kafka
-      PAYSENSE_JWT_SECRET: ${PAYSENSE_JWT_SECRET:?set PAYSENSE_JWT_SECRET (>= 32 chars)}
-      PAYSENSE_SERVICE_TOKEN: ${PAYSENSE_SERVICE_TOKEN:?set PAYSENSE_SERVICE_TOKEN}
-      PAYSENSE_AI_SERVICE_TOKEN: ${AI_INTERNAL_TOKEN:?set AI_INTERNAL_TOKEN}
-      PAYSENSE_CALLBACK_SECRET: ${PAYSENSE_CALLBACK_SECRET:?set PAYSENSE_CALLBACK_SECRET}
-      PAYSENSE_METRICS_USER: ${PAYSENSE_METRICS_USER:-prometheus}
-      PAYSENSE_METRICS_PASSWORD: ${PAYSENSE_METRICS_PASSWORD:?set PAYSENSE_METRICS_PASSWORD}
-      PAYSENSE_DEMO_USERS_ENABLED: ${PAYSENSE_DEMO_USERS_ENABLED:-true}
-      PAYSENSE_DEMO_VIEWER_PASSWORD: ${PAYSENSE_DEMO_VIEWER_PASSWORD:-}
-      PAYSENSE_DEMO_INVESTIGATOR_PASSWORD: ${PAYSENSE_DEMO_INVESTIGATOR_PASSWORD:-}
-      PAYSENSE_DEMO_ADMIN_PASSWORD: ${PAYSENSE_DEMO_ADMIN_PASSWORD:-}
-      PAYSENSE_AI_URL: http://ai-service:8090
-      PAYSENSE_SIMULATION_ENABLED: ${PAYSENSE_SIMULATION_ENABLED:-true}
+      PAYNOMENON_ENV: ${PAYNOMENON_ENV:-development}
+      PAYNOMENON_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-paynomenon}
+      PAYNOMENON_DB_USER: ${POSTGRES_USER:-paynomenon}
+      PAYNOMENON_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PAYNOMENON_REDIS_HOST: redis
+      PAYNOMENON_KAFKA_BOOTSTRAP: kafka:9092
+      PAYNOMENON_EVENTS_TRANSPORT: kafka
+      PAYNOMENON_JWT_SECRET: ${PAYNOMENON_JWT_SECRET:?set PAYNOMENON_JWT_SECRET (>= 32 chars)}
+      PAYNOMENON_SERVICE_TOKEN: ${PAYNOMENON_SERVICE_TOKEN:?set PAYNOMENON_SERVICE_TOKEN}
+      PAYNOMENON_AI_SERVICE_TOKEN: ${AI_INTERNAL_TOKEN:?set AI_INTERNAL_TOKEN}
+      PAYNOMENON_CALLBACK_SECRET: ${PAYNOMENON_CALLBACK_SECRET:?set PAYNOMENON_CALLBACK_SECRET}
+      PAYNOMENON_METRICS_USER: ${PAYNOMENON_METRICS_USER:-prometheus}
+      PAYNOMENON_METRICS_PASSWORD: ${PAYNOMENON_METRICS_PASSWORD:?set PAYNOMENON_METRICS_PASSWORD}
+      PAYNOMENON_DEMO_USERS_ENABLED: ${PAYNOMENON_DEMO_USERS_ENABLED:-true}
+      PAYNOMENON_DEMO_VIEWER_PASSWORD: ${PAYNOMENON_DEMO_VIEWER_PASSWORD:-}
+      PAYNOMENON_DEMO_INVESTIGATOR_PASSWORD: ${PAYNOMENON_DEMO_INVESTIGATOR_PASSWORD:-}
+      PAYNOMENON_DEMO_ADMIN_PASSWORD: ${PAYNOMENON_DEMO_ADMIN_PASSWORD:-}
+      PAYNOMENON_AI_URL: http://ai-service:8090
+      PAYNOMENON_SIMULATION_ENABLED: ${PAYNOMENON_SIMULATION_ENABLED:-true}
     ports: ["127.0.0.1:${BACKEND_PORT:-8080}:8080"]
     stop_grace_period: 30s
 
@@ -82,10 +82,10 @@ services:
     build: {context: ., dockerfile: infrastructure/docker/ai-service.Dockerfile}
     <<: *restart
     environment:
-      AI_ENVIRONMENT: ${PAYSENSE_ENV:-development}
+      AI_ENVIRONMENT: ${PAYNOMENON_ENV:-development}
       AI_BACKEND_URL: http://backend:8080
       AI_INTERNAL_TOKEN: ${AI_INTERNAL_TOKEN}
-      AI_BACKEND_SERVICE_TOKEN: ${PAYSENSE_SERVICE_TOKEN}
+      AI_BACKEND_SERVICE_TOKEN: ${PAYNOMENON_SERVICE_TOKEN}
       AI_PROVIDER: ${AI_PROVIDER:-mock}
       AI_MODEL: ${AI_MODEL:-claude-sonnet-5-5}
       AI_API_KEY: ${AI_API_KEY:-}
@@ -104,12 +104,12 @@ services:
     profiles: [observability]
     <<: *restart
     environment:
-      PAYSENSE_METRICS_PASSWORD: ${PAYSENSE_METRICS_PASSWORD}
+      PAYNOMENON_METRICS_PASSWORD: ${PAYNOMENON_METRICS_PASSWORD}
     entrypoint:
       - /bin/sh
       - -c
       - |
-        printf '%s' "$$PAYSENSE_METRICS_PASSWORD" > /tmp/metrics_password
+        printf '%s' "$$PAYNOMENON_METRICS_PASSWORD" > /tmp/metrics_password
         exec /bin/prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=7d
     volumes: [./infrastructure/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro]
     ports: ["127.0.0.1:9090:9090"]

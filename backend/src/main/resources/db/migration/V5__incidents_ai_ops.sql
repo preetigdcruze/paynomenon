@@ -1,4 +1,4 @@
--- PaySense core schema, part 5: incidents, anomalies, AI interaction metadata, operational logs, runbooks.
+-- Paynomenon core schema, part 5: incidents, anomalies, AI interaction metadata, operational logs, runbooks.
 
 CREATE TABLE incidents (
     id            uuid PRIMARY KEY,

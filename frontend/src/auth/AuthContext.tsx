@@ -14,7 +14,7 @@ interface AuthValue {
 }
 
 const RANK: Record<Role, number> = { VIEWER: 1, INVESTIGATOR: 2, ADMIN: 3 };
-const SESSION_KEY = 'paysense.session';
+const SESSION_KEY = 'paynomenon.session';
 const AuthCtx = createContext<AuthValue | null>(null);
 
 function loadSession(): Session | null {

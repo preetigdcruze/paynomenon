@@ -26,7 +26,7 @@ from .models import AnalyticsRequest, DetectRequest, InvestigationRequest, Runbo
 from .providers import LLMProvider, ProviderStats, build_provider
 from .runbook_qa import ask_runbooks
 
-log = logging.getLogger("paysense.ai")
+log = logging.getLogger("paynomenon.ai")
 
 
 class _Window:
@@ -57,7 +57,7 @@ def create_app(
     http = http_client or httpx.Client(timeout=httpx.Timeout(settings.backend_timeout_seconds, connect=2.0))
     llm = provider or build_provider(settings, stats, http_client if http_client else None)
     app = FastAPI(
-        title="PaySense AI Intelligence Service",
+        title="Paynomenon AI Intelligence Service",
         version=__version__,
         description="Read-only investigation, analytics, anomaly detection and runbook retrieval. It cannot authorize, capture, refund or otherwise mutate payments.",
         docs_url=None if settings.is_production else "/docs",

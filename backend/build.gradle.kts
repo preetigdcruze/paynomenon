@@ -7,7 +7,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "12.3.0"
 }
 
-group = "com.paysense"
+group = "com.paynomenon"
 version = "0.1.0"
 
 java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
@@ -74,7 +74,7 @@ tasks.register<Test>("integrationTest") {
     shouldRunAfter(tasks.test)
 }
 
-tasks.bootJar { archiveFileName = "paysense-backend.jar" }
+tasks.bootJar { archiveFileName = "paynomenon-backend.jar" }
 
 ktlint {
     version.set("1.7.1")

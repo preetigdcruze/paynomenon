@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: Paynomenon
+    folder: Paynomenon
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

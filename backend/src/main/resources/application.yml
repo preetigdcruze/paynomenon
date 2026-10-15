@@ -1,12 +1,12 @@
 spring:
   application:
-    name: paysense-backend
+    name: paynomenon-backend
   datasource:
-    url: ${PAYSENSE_DB_URL:jdbc:postgresql://localhost:5432/paysense}
-    username: ${PAYSENSE_DB_USER:paysense}
-    password: ${PAYSENSE_DB_PASSWORD:paysense}
+    url: ${PAYNOMENON_DB_URL:jdbc:postgresql://localhost:5432/paynomenon}
+    username: ${PAYNOMENON_DB_USER:paynomenon}
+    password: ${PAYNOMENON_DB_PASSWORD:paynomenon}
     hikari:
-      maximum-pool-size: ${PAYSENSE_DB_POOL_SIZE:15}
+      maximum-pool-size: ${PAYNOMENON_DB_POOL_SIZE:15}
       minimum-idle: 2
       connection-timeout: 3000
       validation-timeout: 1000
@@ -31,12 +31,12 @@ spring:
     time-zone: UTC
   data:
     redis:
-      host: ${PAYSENSE_REDIS_HOST:localhost}
-      port: ${PAYSENSE_REDIS_PORT:6379}
+      host: ${PAYNOMENON_REDIS_HOST:localhost}
+      port: ${PAYNOMENON_REDIS_PORT:6379}
       timeout: 500ms
       connect-timeout: 500ms
   kafka:
-    bootstrap-servers: ${PAYSENSE_KAFKA_BOOTSTRAP:localhost:9092}
+    bootstrap-servers: ${PAYNOMENON_KAFKA_BOOTSTRAP:localhost:9092}
     producer:
       acks: all
       properties:
@@ -70,6 +70,11 @@ management:
     web:
       exposure:
         include: health,prometheus,metrics,info
+  health:
+    # Redis is optional (rate limiting and caching degrade gracefully), so it must not turn the public health DOWN.
+    # Its state is reported by /api/v1/system/status instead.
+    redis:
+      enabled: false
   endpoint:
     health:
       probes:
@@ -85,10 +90,10 @@ management:
       percentiles-histogram:
         http.server.requests: true
     tags:
-      application: paysense-backend
+      application: paynomenon-backend
   tracing:
     sampling:
-      probability: ${PAYSENSE_TRACE_SAMPLING:0.1}
+      probability: ${PAYNOMENON_TRACE_SAMPLING:0.1}
   otlp:
     tracing:
       endpoint: ${OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:http://localhost:4318/v1/traces}
@@ -99,20 +104,20 @@ springdoc:
   api-docs:
     path: /v3/api-docs
 
-paysense:
-  environment: ${PAYSENSE_ENV:development}   # development | production
+paynomenon:
+  environment: ${PAYNOMENON_ENV:development}   # development | production
   scheduling-enabled: true
   security:
-    jwt-secret: ${PAYSENSE_JWT_SECRET:dev-only-secret-change-me-dev-only-secret-change-me}
+    jwt-secret: ${PAYNOMENON_JWT_SECRET:dev-only-secret-change-me-dev-only-secret-change-me}
     jwt-ttl-minutes: 60
-    service-token: ${PAYSENSE_SERVICE_TOKEN:dev-service-token}
-    metrics-user: ${PAYSENSE_METRICS_USER:prometheus}
-    metrics-password: ${PAYSENSE_METRICS_PASSWORD:dev-metrics-password}
-    callback-secret: ${PAYSENSE_CALLBACK_SECRET:dev-callback-secret}
-    demo-users-enabled: ${PAYSENSE_DEMO_USERS_ENABLED:true}
-    demo-password-viewer: ${PAYSENSE_DEMO_VIEWER_PASSWORD:viewer-demo-pass}
-    demo-password-investigator: ${PAYSENSE_DEMO_INVESTIGATOR_PASSWORD:investigator-demo-pass}
-    demo-password-admin: ${PAYSENSE_DEMO_ADMIN_PASSWORD:admin-demo-pass}
+    service-token: ${PAYNOMENON_SERVICE_TOKEN:dev-service-token}
+    metrics-user: ${PAYNOMENON_METRICS_USER:prometheus}
+    metrics-password: ${PAYNOMENON_METRICS_PASSWORD:dev-metrics-password}
+    callback-secret: ${PAYNOMENON_CALLBACK_SECRET:dev-callback-secret}
+    demo-users-enabled: ${PAYNOMENON_DEMO_USERS_ENABLED:true}
+    demo-password-viewer: ${PAYNOMENON_DEMO_VIEWER_PASSWORD:viewer-demo-pass}
+    demo-password-investigator: ${PAYNOMENON_DEMO_INVESTIGATOR_PASSWORD:investigator-demo-pass}
+    demo-password-admin: ${PAYNOMENON_DEMO_ADMIN_PASSWORD:admin-demo-pass}
     max-request-bytes: 65536
   payments:
     supported-currencies: EUR,USD,GBP,JPY,CHF,SEK
@@ -143,9 +148,9 @@ paysense:
     seed: 42
   events:
     transport: in-process     # kafka | in-process
-    topic: paysense.events.v1
+    topic: paynomenon.events.v1
     partitions: 3
-    consumer-group: paysense-event-handlers
+    consumer-group: paynomenon-event-handlers
     outbox:
       batch-size: 50
       poll-interval: 500ms
@@ -172,8 +177,8 @@ paysense:
     min-latency-sample: 20
     cache-ttl: 10s
   ai:
-    base-url: ${PAYSENSE_AI_URL:http://localhost:8090}
-    service-token: ${PAYSENSE_AI_SERVICE_TOKEN:dev-ai-internal-token}
+    base-url: ${PAYNOMENON_AI_URL:http://localhost:8090}
+    service-token: ${PAYNOMENON_AI_SERVICE_TOKEN:dev-ai-internal-token}
     connect-timeout: 1s
     read-timeout: 45s
     retention: 30d

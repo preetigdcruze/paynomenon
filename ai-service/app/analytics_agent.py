@@ -23,7 +23,7 @@ from .prompts import SYSTEM_EXPLAIN, SYSTEM_PLAN, explain_user_message, plan_use
 from .providers import LLMMessage, LLMProvider, LLMRequest, ProviderError, TaskType
 from .templates import template_explanation
 
-log = logging.getLogger("paysense.ai.analytics")
+log = logging.getLogger("paynomenon.ai.analytics")
 
 Window = Literal["last_hour", "last_6_hours", "today", "last_24_hours", "last_7_days", "last_30_days"]
 _PROCESSOR_PATTERN = r"^[A-Z0-9_]{1,32}$"

@@ -10,7 +10,7 @@ RUN gradle --no-daemon bootJar -x test
 FROM eclipse-temurin:21-jre
 RUN groupadd --system app && useradd --system --gid app --home /app app
 WORKDIR /app
-COPY --from=build /src/build/libs/paysense-backend.jar app.jar
+COPY --from=build /src/build/libs/paynomenon-backend.jar app.jar
 USER app
 EXPOSE 8080
 # No secrets are baked into the image: everything comes from environment variables at runtime.

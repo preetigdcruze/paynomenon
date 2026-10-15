@@ -62,8 +62,8 @@ export function PaymentDetail() {
             {p.synthetic && <Banner kind="info">Synthetic demo payment.</Banner>}
             {p.status === 'UNCERTAIN' && (
               <Banner kind="warn">
-                The processor did not answer in time, so the outcome of <strong>{p.pendingOperation}</strong> is unknown. PaySense
-                will look it up at the processor; it will not retry the charge.
+                The processor did not answer in time, so the outcome of <strong>{p.pendingOperation}</strong> is unknown.
+                Paynomenon will look it up at the processor; it will not retry the charge.
               </Banner>
             )}
             <div className="card">

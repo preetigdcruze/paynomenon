@@ -23,7 +23,7 @@ from .providers import LLMMessage, LLMProvider, LLMRequest, ProviderError, TaskT
 from .rag import search_runbooks
 from .untrusted import clean_untrusted, looks_like_instructions
 
-log = logging.getLogger("paysense.ai.investigator")
+log = logging.getLogger("paynomenon.ai.investigator")
 
 GENERIC_QUESTION = "Explain the current state of this subject and the most likely reason for any failure."
 

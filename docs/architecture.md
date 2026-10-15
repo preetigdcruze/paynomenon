@@ -1,6 +1,6 @@
 # Architecture
 
-PaySense is a **modular monolith** (Kotlin / Spring Boot) plus a small, independent **AI intelligence service** (Python / FastAPI) and a **React dashboard**. All payments are simulated; no real money, card data or banking network is involved.
+Paynomenon is a **modular monolith** (Kotlin / Spring Boot) plus a small, independent **AI intelligence service** (Python / FastAPI) and a **React dashboard**. All payments are simulated; no real money, card data or banking network is involved.
 
 ```mermaid
 flowchart LR
@@ -118,7 +118,7 @@ flowchart LR
 * Failed publication backs off exponentially with jitter (`next_attempt_at`); after `max-attempts` the row is `FAILED` and an ADMIN can requeue it. Later events of an aggregate wait behind an earlier one that is backing off.
 * Each consumer deduplicates durably by `(consumer, event_id)` in `processed_events`. For database-only handlers the marker and the effects commit atomically. The resolver calls the processor, so it runs outside the dedupe transaction and is itself idempotent (it only acts on `UNCERTAIN` payments).
 * The Kafka offset is acknowledged only after the dispatcher returned: every handler processed the event, saw a duplicate, or the event was durably dead-lettered. If even the dead-letter write fails (database down), the record is not acknowledged and is redelivered.
-* **Local mode:** `PAYSENSE_EVENTS_TRANSPORT=in-process` skips the broker but keeps the outbox, dedupe, retry and DLQ code paths identical. Integration tests exercise the real broker (embedded KRaft Kafka).
+* **Local mode:** `PAYNOMENON_EVENTS_TRANSPORT=in-process` skips the broker but keeps the outbox, dedupe, retry and DLQ code paths identical. Integration tests exercise the real broker (embedded KRaft Kafka).
 
 Guarantees and limits are spelled out in [failure-scenarios.md](failure-scenarios.md). In short: at-least-once delivery with idempotent handlers; **not** exactly-once end to end.
 

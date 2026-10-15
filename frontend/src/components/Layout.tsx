@@ -16,7 +16,7 @@ export function Layout() {
     <div className="shell">
       <aside className="sidebar">
         <div className="brand">
-          <span className="brand-mark" aria-hidden="true" /> PaySense
+          <span className="brand-mark" aria-hidden="true" /> Paynomenon
         </div>
         <nav aria-label="Main" style={{ display: 'contents' }}>
           {LINKS.map(([to, label]) => (
