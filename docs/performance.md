@@ -22,7 +22,7 @@ Raw k6 summaries of these runs are kept in [`loadtest/results/recorded/`](../loa
 make seed                                   # optional baseline data
 k6 run -e SCENARIO=throughput -e RATE=40 -e DURATION=60s loadtest/payments.js
 k6 run -e SCENARIO=duplicates -e VUS=30  -e DURATION=30s loadtest/payments.js
-k6 run -e SCENARIO=outage     -e RATE=20 -e DURATION=70s loadtest/payments.js   # needs PAYSENSE_SIMULATION_ENABLED=true and the admin account
+k6 run -e SCENARIO=outage     -e RATE=20 -e DURATION=70s loadtest/payments.js   # needs PAYNOMENON_SIMULATION_ENABLED=true and the admin account
 ./loadtest/index-experiment.sh                                                  # needs psql, k6 and `cd backend && ./gradlew bootJar`
 ```
 
@@ -90,6 +90,6 @@ Record your own runs here (same scenario names) together with hardware, topology
 
 ## Reading the numbers responsibly
 
-* Latency of `authorize` is mostly the simulated processor delay; set `PAYSENSE_SIMULATION_REAL_DELAY=false` to measure the platform itself.
+* Latency of `authorize` is mostly the simulated processor delay; set `PAYNOMENON_SIMULATION_REAL_DELAY=false` to measure the platform itself.
 * With the load generator on the same host, absolute numbers are pessimistic for the server and optimistic about network cost.
 * Single runs were recorded; no confidence intervals. Repeat runs before drawing conclusions about small differences.

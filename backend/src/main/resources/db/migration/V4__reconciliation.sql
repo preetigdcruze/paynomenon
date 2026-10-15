@@ -1,4 +1,4 @@
--- PaySense core schema, part 4: reconciliation.
+-- Paynomenon core schema, part 4: reconciliation.
 
 CREATE TABLE reconciliation_runs (
     id                uuid PRIMARY KEY,

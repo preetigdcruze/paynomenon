@@ -18,7 +18,7 @@ from typing import Any, Literal
 
 from .backend_client import AnomalySink, BackendError, BackendReader
 
-log = logging.getLogger("paysense.ai.anomaly")
+log = logging.getLogger("paynomenon.ai.anomaly")
 
 Direction = Literal["HIGH", "LOW"]
 Severity = Literal["LOW", "MEDIUM", "HIGH"]

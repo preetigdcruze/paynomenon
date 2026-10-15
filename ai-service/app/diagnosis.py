@@ -208,7 +208,7 @@ def diagnose(evidence: list[Evidence], subject_type: str, gaps: list[str] | None
                     ids(stats[:1]) or ids(timeout_att[:1]),
                     "medium" if stats else "low",
                 ),
-                ("A network problem between PaySense and the processor.", ids(logs[:1]) or ids(timeout_att[:1]), "low"),
+                ("A network problem between Paynomenon and the processor.", ids(logs[:1]) or ids(timeout_att[:1]), "low"),
             ],
         )
     if unavailable_att:

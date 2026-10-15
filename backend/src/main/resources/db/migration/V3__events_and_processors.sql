@@ -1,4 +1,4 @@
--- PaySense core schema, part 3: transactional outbox, consumer dedup, dead letters, simulated processor state.
+-- Paynomenon core schema, part 3: transactional outbox, consumer dedup, dead letters, simulated processor state.
 
 CREATE TABLE outbox_events (
     id              uuid PRIMARY KEY,           -- doubles as the event id carried to consumers

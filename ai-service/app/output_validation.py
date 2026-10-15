@@ -17,7 +17,7 @@ T = TypeVar("T", bound=BaseModel)
 _UUID = re.compile(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
 _LONG_NUMBER = re.compile(r"(?<![\w.])\d{4,}(?![\w.])")
 _CLAIMS_ACTION = re.compile(
-    r"\b(i|we|the system|paysense)\s+(have\s+|has\s+|had\s+)?(already\s+)?(fixed|restarted|rolled\s+back|refunded|remediated|mitigated|resolved|retried|re-ran|reran|replayed|captured|authori[sz]ed|cancell?ed|deployed|resubmitted)\b"
+    r"\b(i|we|the system|paynomenon)\s+(have\s+|has\s+|had\s+)?(already\s+)?(fixed|restarted|rolled\s+back|refunded|remediated|mitigated|resolved|retried|re-ran|reran|replayed|captured|authori[sz]ed|cancell?ed|deployed|resubmitted)\b"
     r"|\b(has|have)\s+been\s+(fixed|restarted|rolled\s+back|refunded|remediated|mitigated|resolved|replayed|captured|cancell?ed)\b",
     re.I,
 )

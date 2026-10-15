@@ -1,4 +1,4 @@
-"""In-memory stand-in for the PaySense backend's read API, used by tests and the evaluation harness."""
+"""In-memory stand-in for the Paynomenon backend's read API, used by tests and the evaluation harness."""
 
 from __future__ import annotations
 

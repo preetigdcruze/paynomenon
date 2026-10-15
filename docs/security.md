@@ -1,6 +1,6 @@
 # Security
 
-PaySense is a **portfolio simulation**: no real money, cards or bank credentials. The controls below are real and tested, but this is not a security-certified system (see "Limits").
+Paynomenon is a **portfolio simulation**: no real money, cards or bank credentials. The controls below are real and tested, but this is not a security-certified system (see "Limits").
 
 ## Authentication and authorization
 
@@ -20,7 +20,7 @@ PaySense is a **portfolio simulation**: no real money, cards or bank credentials
 
 ## Demo accounts
 
-`viewer`, `investigator`, `admin` are created **only when** `PAYSENSE_DEMO_USERS_ENABLED=true` and the environment is not `production` (startup fails otherwise). Passwords come from environment variables (`PAYSENSE_DEMO_*_PASSWORD`); `.env.example` documents the development defaults. They are for local use only; never expose a development instance publicly.
+`viewer`, `investigator`, `admin` are created **only when** `PAYNOMENON_DEMO_USERS_ENABLED=true` and the environment is not `production` (startup fails otherwise). Passwords come from environment variables (`PAYNOMENON_DEMO_*_PASSWORD`); `.env.example` documents the development defaults. They are for local use only; never expose a development instance publicly.
 
 ## Secrets
 
@@ -36,7 +36,7 @@ PaySense is a **portfolio simulation**: no real money, cards or bank credentials
 * Correlation ids from clients are validated (`[A-Za-z0-9._-]{8,64}`) to prevent log injection.
 * Callback webhooks require an HMAC-SHA256 signature over the raw body (constant-time compare); callbacks cannot overwrite settled states and are deduplicated.
 * Actuator: only `health` is public. `/actuator/prometheus` and other endpoints require HTTP Basic credentials with a dedicated metrics user. Swagger UI/OpenAPI are disabled in production.
-* **Simulation controls** (`/api/v1/dev/**`, magic `[sim:...]` description markers, seeding, `WITH_DISCREPANCIES` reports) exist only when `paysense.simulation.enabled=true` and are refused/absent in production configuration.
+* **Simulation controls** (`/api/v1/dev/**`, magic `[sim:...]` description markers, seeding, `WITH_DISCREPANCIES` reports) exist only when `paynomenon.simulation.enabled=true` and are refused/absent in production configuration.
 * nginx sets a strict Content-Security-Policy (`default-src 'self'`), `nosniff`, `X-Frame-Options: DENY`, and does not proxy `/actuator`.
 
 ## Frontend

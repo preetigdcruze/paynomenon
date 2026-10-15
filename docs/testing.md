@@ -36,7 +36,7 @@ There is deliberately no in-memory database fallback. Kafka tests use `spring-ka
 ```bash
 # Docker-less local setup used during development of this project
 make local-db                                   # role + databases on a local PostgreSQL
-export TEST_DATABASE_URL=jdbc:postgresql://localhost:5432/paysense_test
+export TEST_DATABASE_URL=jdbc:postgresql://localhost:5432/paynomenon_test
 make test-integration
 ```
 

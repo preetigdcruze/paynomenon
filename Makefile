@@ -1,4 +1,4 @@
-# PaySense developer commands.   `make help` lists them.
+# Paynomenon developer commands.   `make help` lists them.
 SHELL := /bin/bash
 BACKEND_URL ?= http://localhost:8080
 AI_VENV := ai-service/.venv
@@ -14,7 +14,7 @@ help: ## Show this help
 # ---- setup & stack --------------------------------------------------------------------------------------------------
 setup: ## Create .env with random secrets, install Python and frontend dependencies
 	@test -f .env || { cp .env.example .env; \
-	  for k in POSTGRES_PASSWORD PAYSENSE_JWT_SECRET PAYSENSE_SERVICE_TOKEN PAYSENSE_CALLBACK_SECRET PAYSENSE_METRICS_PASSWORD AI_INTERNAL_TOKEN GRAFANA_ADMIN_PASSWORD; do \
+	  for k in POSTGRES_PASSWORD PAYNOMENON_JWT_SECRET PAYNOMENON_SERVICE_TOKEN PAYNOMENON_CALLBACK_SECRET PAYNOMENON_METRICS_PASSWORD AI_INTERNAL_TOKEN GRAFANA_ADMIN_PASSWORD; do \
 	    sed -i "s|^$$k=.*|$$k=$$(head -c 36 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 40)|" .env; done; \
 	  echo "Created .env with generated secrets (demo account passwords are the documented defaults)."; }
 	python3 -m venv $(AI_VENV) && $(AI_VENV)/bin/pip install -q -r ai-service/requirements-dev.txt
@@ -31,7 +31,7 @@ logs: ## Tail container logs
 	docker compose logs -f --tail=100
 
 migrate: ## Apply database migrations and exit (uses the environment/.env database settings)
-	cd backend && ./gradlew -q bootRun --args='--paysense.migrate-only=true --spring.main.web-application-type=none'
+	cd backend && ./gradlew -q bootRun --args='--paynomenon.migrate-only=true --spring.main.web-application-type=none'
 
 seed: ## Load reproducible synthetic data into a running backend (seed 42); REPLACE=1 wipes first
 	@TOKEN=$$(curl -sf -X POST $(BACKEND_URL)/api/v1/auth/login -H 'content-type: application/json' -d '{"username":"admin","password":"$(ADMIN_PASSWORD)"}' | python3 -c 'import sys,json;print(json.load(sys.stdin)["accessToken"])') && \
@@ -77,7 +77,7 @@ load-test: ## k6 throughput test (see docs/performance.md for the other scenario
 
 # ---- running without Docker ----------------------------------------------------------------------------------------------
 local-db: ## Create the local PostgreSQL role/databases used by the no-Docker workflow (needs a local server and psql)
-	psql -h localhost -U postgres -c "CREATE ROLE paysense LOGIN PASSWORD 'paysense'" -c "CREATE DATABASE paysense OWNER paysense" -c "CREATE DATABASE paysense_test OWNER paysense"
+	psql -h localhost -U postgres -c "CREATE ROLE paynomenon LOGIN PASSWORD 'paynomenon'" -c "CREATE DATABASE paynomenon OWNER paynomenon" -c "CREATE DATABASE paynomenon_test OWNER paynomenon"
 
 dev-backend: ## Backend on :8080 against local PostgreSQL, in-process event transport
 	cd backend && ./gradlew bootRun

@@ -1,4 +1,4 @@
-paysense:
+paynomenon:
   scheduling-enabled: false
   redis:
     enabled: false
@@ -40,5 +40,5 @@ spring:
     banner-mode: off
 logging:
   level:
-    com.paysense: WARN
+    com.paynomenon: WARN
     org.springframework: WARN

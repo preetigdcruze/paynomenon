@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 
 // The browser only ever talks to its own origin. In development Vite proxies /api to the backend; in Docker nginx does.
 // No API keys or service URLs are embedded in the bundle.
-const backend = process.env.PAYSENSE_BACKEND_URL ?? 'http://localhost:8080';
+const backend = process.env.PAYNOMENON_BACKEND_URL ?? 'http://localhost:8080';
 
 export default defineConfig({
   plugins: [react()],

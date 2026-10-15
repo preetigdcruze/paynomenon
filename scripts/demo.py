@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guided demo of three complete workflows against a running PaySense stack (standard library only).
+"""Guided demo of three complete workflows against a running Paynomenon stack (standard library only).
 
     python3 scripts/demo.py [--base-url http://localhost:8080] [--admin-password ...]
 

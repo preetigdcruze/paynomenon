@@ -1,4 +1,4 @@
--- PaySense core schema, part 2: immutable double-entry ledger (simulated environment only).
+-- Paynomenon core schema, part 2: immutable double-entry ledger (simulated environment only).
 
 CREATE TABLE ledger_transactions (
     id                     uuid PRIMARY KEY,

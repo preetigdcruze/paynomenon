@@ -16,7 +16,7 @@ class JsonFormatter(logging.Formatter):
             "level": record.levelname,
             "logger": record.name,
             "message": record.getMessage(),
-            "service": "paysense-ai-service",
+            "service": "paynomenon-ai-service",
             "correlationId": correlation_id.get(),
         }
         if record.exc_info:

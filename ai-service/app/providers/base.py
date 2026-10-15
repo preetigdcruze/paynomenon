@@ -11,7 +11,7 @@ from threading import Lock
 
 from ..redaction import redact
 
-log = logging.getLogger("paysense.ai.provider")
+log = logging.getLogger("paynomenon.ai.provider")
 
 
 class TaskType(StrEnum):

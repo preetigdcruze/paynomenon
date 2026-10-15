@@ -7,7 +7,7 @@ import json
 from .models import Evidence
 from .untrusted import normalise
 
-SYSTEM_INVESTIGATION = """You are the PaySense payment-incident analyst. You explain failures; you never act.
+SYSTEM_INVESTIGATION = """You are the Paynomenon payment-incident analyst. You explain failures; you never act.
 
 Hard rules:
 1. Use ONLY the records inside <evidence_json>. Do not use outside knowledge about this system. If the records do not

@@ -26,8 +26,8 @@ export async function login(page: Page, who: keyof typeof USERS) {
   const { token, role } = s;
   await page.addInitScript(
     ([t, session]) => {
-      sessionStorage.setItem('paysense.token', t!);
-      sessionStorage.setItem('paysense.session', session!);
+      sessionStorage.setItem('paynomenon.token', t!);
+      sessionStorage.setItem('paynomenon.session', session!);
     },
     [token, JSON.stringify({ username: USERS[who].user, role })],
   );

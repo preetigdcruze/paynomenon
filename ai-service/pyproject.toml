@@ -1,7 +1,7 @@
 [project]
-name = "paysense-ai-service"
+name = "paynomenon-ai-service"
 version = "0.1.0"
-description = "AI intelligence layer for PaySense: read-only investigation, analytics, anomaly detection and runbook retrieval"
+description = "AI intelligence layer for Paynomenon: read-only investigation, analytics, anomaly detection and runbook retrieval"
 requires-python = ">=3.12"
 
 [tool.pytest.ini_options]

@@ -18,7 +18,7 @@ from .prompts import SYSTEM_INCIDENT, incident_user_message
 from .providers import LLMMessage, LLMProvider, LLMRequest, ProviderError, TaskType
 from .rag import excerpts_for_prompt, search_runbooks
 
-log = logging.getLogger("paysense.ai.incident")
+log = logging.getLogger("paynomenon.ai.incident")
 
 
 def _money(currency: str, value: Decimal) -> str:

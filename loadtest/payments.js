@@ -1,4 +1,4 @@
-// PaySense load tests (k6). One file, several scenarios selected with SCENARIO=<name>:
+// Paynomenon load tests (k6). One file, several scenarios selected with SCENARIO=<name>:
 //   throughput   open-model load of create -> authorize -> (capture) flows; reports latency percentiles and error rate
 //   duplicates   concurrent duplicate create requests with the same Idempotency-Key; verifies exactly-one-payment semantics
 //   outage       steady load while a controller turns processor failures on and off; shows breaker behaviour and recovery
@@ -194,7 +194,7 @@ function textSummary(data) {
   const t = (k) => (m[k] ? m[k].values : null);
   const line = (label, k) => { const v = t(k); return v ? `  ${label.padEnd(26)} avg=${v.avg.toFixed(1)}ms  p50=${v.med.toFixed(1)}ms  p95=${v['p(95)'].toFixed(1)}ms  p99=${v['p(99)'].toFixed(1)}ms  max=${v.max.toFixed(0)}ms\n` : ''; };
   const reqs = m.http_reqs ? m.http_reqs.values : { count: 0, rate: 0 };
-  let out = `\n=== PaySense load test: ${SCENARIO} ===\n`;
+  let out = `\n=== Paynomenon load test: ${SCENARIO} ===\n`;
   out += `  requests: ${reqs.count} (${reqs.rate.toFixed(1)}/s)   http errors: ${((m.http_req_failed?.values.rate ?? 0) * 100).toFixed(2)}%   iterations: ${m.iterations?.values.count ?? 0}\n`;
   out += line('all requests', 'http_req_duration');
   for (const n of ['create', 'authorize', 'capture', 'duplicate_create', 'list', 'search']) out += line(n, `http_req_duration{name:${n}}`);

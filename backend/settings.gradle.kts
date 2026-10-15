@@ -1,1 +1,1 @@
-rootProject.name = "paysense-backend"
+rootProject.name = "paynomenon-backend"

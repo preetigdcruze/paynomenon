@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Before/after experiment for one concrete optimisation: the pg_trgm GIN indexes added in migration V6.
 # Scenario: free-text search on the payments page (`?q=order-12345`) over a large table.
-#   1. creates a scratch database `paysense_load` and starts a second backend on :8082 against it (migrations create the schema)
+#   1. creates a scratch database `paynomenon_load` and starts a second backend on :8082 against it (migrations create the schema)
 #   2. bulk-inserts $ROWS synthetic payments
 #   3. runs the k6 `search` scenario WITHOUT the indexes, then WITH them, and prints EXPLAIN ANALYZE for the query each time
 # Requires: psql, k6, a built backend (`cd backend && ./gradlew bootJar`). Uses the PG* environment variables for the server.
@@ -10,13 +10,13 @@ cd "$(dirname "$0")/.."
 ROWS="${ROWS:-500000}"
 RATE="${RATE:-20}"
 DURATION="${DURATION:-30s}"
-PGHOST="${PGHOST:-localhost}"; PGUSER="${PGUSER:-paysense}"; export PGPASSWORD="${PGPASSWORD:-paysense}"
-DB=paysense_load
+PGHOST="${PGHOST:-localhost}"; PGUSER="${PGUSER:-paynomenon}"; export PGPASSWORD="${PGPASSWORD:-paynomenon}"
+DB=paynomenon_load
 psql -h "$PGHOST" -U "$PGUSER" -d postgres -qc "DROP DATABASE IF EXISTS $DB" -c "CREATE DATABASE $DB"
 
-PAYSENSE_DB_URL="jdbc:postgresql://$PGHOST:5432/$DB" PAYSENSE_DB_USER="$PGUSER" PAYSENSE_DB_PASSWORD="$PGPASSWORD" SERVER_PORT=8082 \
-  PAYSENSE_REDIS_ENABLED=false PAYSENSE_SCHEDULING_ENABLED=false \
-  java -jar backend/build/libs/paysense-backend.jar >/tmp/paysense-load-backend.log 2>&1 &
+PAYNOMENON_DB_URL="jdbc:postgresql://$PGHOST:5432/$DB" PAYNOMENON_DB_USER="$PGUSER" PAYNOMENON_DB_PASSWORD="$PGPASSWORD" SERVER_PORT=8082 \
+  PAYNOMENON_REDIS_ENABLED=false PAYNOMENON_SCHEDULING_ENABLED=false \
+  java -jar backend/build/libs/paynomenon-backend.jar >/tmp/paynomenon-load-backend.log 2>&1 &
 BACKEND_PID=$!
 trap 'kill $BACKEND_PID 2>/dev/null || true' EXIT
 for _ in $(seq 1 60); do curl -sf localhost:8082/actuator/health >/dev/null && break; sleep 1; done
