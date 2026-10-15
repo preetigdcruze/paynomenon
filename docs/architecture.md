@@ -83,7 +83,7 @@ sequenceDiagram
     S->>DB: TX2: lock row, record attempt, apply outcome: state + ledger + audit + OUTBOX event (one commit)
     S-->>I: result
     I->>DB: mark idempotency record COMPLETED with the response
-    I-->>C: 200 / 202 (uncertain) / 503 (not executed; key released)
+    I-->>C: 200 / 202 (uncertain) / 503 (not executed, key released)
 ```
 
 Outcome mapping (one table drives it, `PaymentOutcomeApplier`):
@@ -143,7 +143,7 @@ sequenceDiagram
     B->>AI: POST /v1/investigations (X-Internal-Token + the caller's JWT)
     AI->>B: GET payment, events, attempts, logs, discrepancies, metrics (allow-listed paths, caller's JWT)
     AI->>AI: mint evidence ids, clean untrusted text, withhold instruction-like text, redact secrets, budget size
-    AI->>L: prompt (instructions in system prompt; evidence as tagged JSON data)
+    AI->>L: prompt (instructions in system prompt, evidence as tagged JSON data)
     L-->>AI: JSON
     AI->>AI: strict schema, citations must exist, no action claims, identifiers must be grounded
     AI-->>B: facts (verified) + findings (rules) + analysis (validated AI) or degraded result
